@@ -13,11 +13,11 @@ def LU(A):
         for i in range(N):
             if i <= j:
                 U[i][j] = A[i][j]
-                for k in range(i-1):
-                    U[i][j] += L[i][k] * U[k][j]
+                for k in range(i):
+                    U[i][j] -= L[i][k] * U[k][j]
             else:
                 L[i][j] = A[i][j]
-                for k in range(j-1):
+                for k in range(j):
                     L[i][j] -= L[i][k] * U[k][j]
                 L[i][j] /= U[j][j]
     print(L)
