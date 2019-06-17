@@ -24,6 +24,7 @@ def jacobi(a: np.matrix, b: np.matrix, iterations) -> np.matrix:
                 if j != i:
                     x1[i] -= a[i][j] * x0[j]
             x1[i] /= a[i][i]
+
         x0 = np.asarray(x1)
         iter += 1
 
@@ -46,6 +47,7 @@ def gauss_seidel_solve(a: np.matrix, b: np.matrix, iterations) -> np.matrix:
             for j in range(i + 1, N):
                 x1[i] -= a[i][j] * x0[j]
             x1[i] /= a[i][i]
+
         x0 = x1.copy()
         iter += 1
     return np.asmatrix(x1)
@@ -93,19 +95,12 @@ A = np.matrix([[12, 3, 4],
 b = np.matrix([30, 26, 33]).transpose()
 my_res = sor_solve(A, b, 1.3, 50).T
 res = np.linalg.solve(A, b)
-print(res)
-print([i for i in np.asarray(jacobi(A, b, 10))])
-print(jacobi(A, b, 10).T)
-print([i for i in jacobi(A, b, 10)])
-print(type(res))
-print(type(jacobi(A, b, 10)))
-#print(np.allclose(res, my_res))
 
 iter = 20
 j = [rmse(np.asarray(res.T)[0], np.asarray(jacobi(A, b, i+1))[0]) for i in range(iter)]
 gs = [rmse(np.asarray(res.T)[0], np.asarray(gauss_seidel_solve(A, b, i+1))[0]) for i in range(iter)]
 sor = [rmse(np.asarray(res.T)[0], np.asarray(sor_solve(A, b, 0.7, i+1))[0]) for i in range(iter)]
-print(rmse(np.asarray(res.T)[0], np.asarray(jacobi(A, b, 10))[0]))
+
 print(j)
 print(gs)
 print(sor)
